@@ -346,3 +346,11 @@ COMMENT ON TABLE predictions IS 'ML model predictions for student academic perfo
 COMMENT ON TABLE student_performance_timeseries IS 'Time-series data for LSTM model training';
 COMMENT ON TABLE ml_models IS 'Metadata and versioning for trained ML models';
 
+ALTER TABLE students
+    ADD COLUMN IF NOT EXISTS age INTEGER,
+    ADD COLUMN IF NOT EXISTS attendance_pct NUMERIC(5,2),
+    ADD COLUMN IF NOT EXISTS lms_logins INTEGER,
+    ADD COLUMN IF NOT EXISTS study_hours NUMERIC(5,2),
+    ADD COLUMN IF NOT EXISTS assignment_submission_rate NUMERIC(5,2),
+    ADD COLUMN IF NOT EXISTS engagement_score NUMERIC(5,2),
+    ADD COLUMN IF NOT EXISTS final_academic_performance VARCHAR(20);
