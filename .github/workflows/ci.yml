@@ -41,10 +41,18 @@ jobs:
 
       - name: Initialize test database
         env:
-          DATABASE_URL: postgresql+asyncpg://sapfs_user:sapfs_pass@localhost:5432/sapfs_test
+          PGPASSWORD: sapfs_pass
         run: |
-          cd backend
-          alembic upgrade head
+          psql -v ON_ERROR_STOP=1 \
+            -h localhost \
+            -U sapfs_user \
+            -d sapfs_test \
+            -f database/migrations/001_initial_schema.sql
+        # env:
+        #   DATABASE_URL: postgresql+asyncpg://sapfs_user:sapfs_pass@localhost:5432/sapfs_test
+        # run: |
+        #   cd backend
+        #   alembic upgrade head
 
       - name: Run tests
         env:
