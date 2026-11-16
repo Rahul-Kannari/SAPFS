@@ -1,0 +1,89 @@
+﻿C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\useDashboard.js:2: import { dashboardAPI } from '../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\useDashboard.js:15: dashboardAPI.getStats(),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\useDashboard.js:16: dashboardAPI.getPerformanceTrends(),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\useDashboard.js:17: dashboardAPI.getAttendanceAnalytics(),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\useDashboard.js:18: dashboardAPI.getRiskHeatmap(),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\usePredictions.js:2: import { predictionsAPI } from '../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\usePredictions.js:13: const res = await predictionsAPI.predict({ student_id: studentId, prediction_type: predictionType });
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\usePredictions.js:35: const res = await predictionsAPI.getByStudent(studentId);
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\useStudents.js:2: import { studentsAPI } from '../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\useStudents.js:15: const res = await studentsAPI.list(params);
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\hooks\useStudents.js:39: studentsAPI.get(id)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\advanced\AdvisorChat.jsx:3: import api, { studentsAPI } from '../../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\advanced\AdvisorChat.jsx:122: const res = await api.post('/agents/advisor/chat', {
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\advanced\AIAgentsDashboard.jsx:3: import api, { studentsAPI } from '../../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\advanced\AIAgentsDashboard.jsx:36: const res = await studentsAPI.list({ page_size: 3000 });
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\advanced\AIAgentsDashboard.jsx:71: const res = await api.post('/agents/predict-v2', {
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\advanced\RecommendationPage.jsx:3: import api from '../../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\advanced\RecommendationPage.jsx:109: await api.post('/api/v2/agents/predict-v2', {
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\advanced\RiskAnalytics.jsx:6: import { studentsAPI } from '../../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\advanced\RiskAnalytics.jsx:52: const res = await studentsAPI.list({ page_size: 3000 });
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\AcademicRecordsPage.jsx:4: import { academicAPI, studentsAPI, coursesAPI } from '../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\CoursesPage.jsx:3: import { coursesAPI, facultyAPI } from '../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\DashboardPage.jsx:4: import { dashboardAPI } from '../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\DashboardPage.jsx:80: dashboardAPI.getStats(),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\DashboardPage.jsx:81: dashboardAPI.getPerformanceTrends(),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\DashboardPage.jsx:82: dashboardAPI.getAttendanceAnalytics(),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\DashboardPage.jsx:83: dashboardAPI.getRiskHeatmap(),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\FacultyPage.jsx:2: import { facultyAPI } from '../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\FacultyPage.jsx:21: await facultyAPI.create(form);
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\FacultyPage.jsx:79: await facultyAPI.update(faculty.id, form);
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\FacultyPage.jsx:149: const res = await facultyAPI.list();
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\LoginPage.jsx:4: import { authAPI } from '../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\LoginPage.jsx:48: const res = await authAPI.login({ email: em, password: pw });
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\PredictionsPage.jsx:3: import { predictionsAPI, studentsAPI } from '../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\PredictionsPage.jsx:256: const res = await studentsAPI.list({ page_size: 3000 });
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\PredictionsPage.jsx:300: const res = await predictionsAPI.predict({ student_id: selectedStudent, prediction_type: predType });
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\PredictionsPage.jsx:338: const res = await predictionsAPI.simulate({
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\PredictionsPage.jsx:369: await predictionsAPI.retrain();
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\StudentsPage.jsx:2: import { studentsAPI } from '../services/api';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\StudentsPage.jsx:56: const res = await studentsAPI.create({
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\StudentsPage.jsx:176: const res = await studentsAPI.bulkImport(records);
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\StudentsPage.jsx:248: await studentsAPI.update(student.id, form);
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\StudentsPage.jsx:363: const res = await studentsAPI.list({ page, page_size: PAGE_SIZE, search, risk_level: filterRisk || undefined });
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\pages\StudentsPage.jsx:641: await studentsAPI.delete(s.id);
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:3: const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/v1';
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:5: const api = axios.create({
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:6: baseURL: API_BASE,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:12: api.interceptors.request.use((config) => {
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:19: api.interceptors.response.use(
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:36: const response = await axios.post(`${API_BASE}/auth/refresh`, { refresh_token: refreshToken });
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:51: login: (data) => api.post('/auth/login', data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:52: refresh: (token) => api.post('/auth/refresh', { refresh_token: token }),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:53: me: () => api.get('/auth/me'),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:58: list: (params) => api.get('/students', { params }),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:59: get: (id) => api.get(`/students/${id}`),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:60: create: (data) => api.post('/students', data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:61: update: (id, data) => api.put(`/students/${id}`, data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:62: delete: (id) => api.delete(`/students/${id}`),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:63: bulkImport: (records) => api.post('/students/bulk-import', records),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:64: getAttendanceSummary: (id) => api.get(`/students/${id}/attendance-summary`),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:69: list: () => api.get('/faculty'),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:70: get: (id) => api.get(`/faculty/${id}`),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:71: create: (data) => api.post('/faculty', data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:72: update: (id, data) => api.put(`/faculty/${id}`, data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:77: list: (params) => api.get('/courses', { params }),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:78: get: (id) => api.get(`/courses/${id}`),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:79: create: (data) => api.post('/courses', data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:84: getByStudent: (studentId) => api.get(`/academic-records`, { params: { student_id: studentId } }),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:85: create: (data) => api.post('/academic-records', data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:86: update: (id, data) => api.put(`/academic-records/${id}`, data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:91: markBulk: (data) => api.post('/attendance/bulk', data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:92: getByStudent: (studentId) => api.get(`/attendance`, { params: { student_id: studentId } }),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:93: getByCourse: (courseId, date) => api.get(`/attendance`, { params: { course_id: courseId, date } }),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:98: list: (params) => api.get('/assignments', { params }),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:99: create: (data) => api.post('/assignments', data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:100: submit: (data) => api.post('/assignments/submit', data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:101: grade: (submissionId, data) => api.put(`/assignments/submissions/${submissionId}/grade`, data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:106: predict: (data) => api.post('/predictions/predict', data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:107: simulate: (data) => api.post('/predictions/simulate', data),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:108: retrain: () => api.post('/predictions/retrain'),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:109: getByStudent: (studentId) => api.get(`/predictions/student/${studentId}`),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:110: getRiskReport: () => api.get('/predictions/risk-report'),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:111: batchPredict: (params) => api.get('/predictions/batch-predict', { params }),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:116: getStats: () => api.get('/dashboard/stats'),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:117: getPerformanceTrends: () => api.get('/dashboard/performance-trends'),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:118: getRiskHeatmap: () => api.get('/dashboard/risk-heatmap'),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:119: getAttendanceAnalytics: () => api.get('/dashboard/attendance-analytics'),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:124: list: () => api.get('/notifications'),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\frontend\src\services\api.js:125: markRead: (id) => api.put(`/notifications/${id}/read`),

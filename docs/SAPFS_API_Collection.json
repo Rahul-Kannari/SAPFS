@@ -1,0 +1,60 @@
+{
+  "info": {
+    "name": "SAPFS API Collection",
+    "description": "Smart Academic Performance Forecasting System — Full API",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000/api/v1" },
+    { "key": "adminToken", "value": "" },
+    { "key": "facultyToken", "value": "" },
+    { "key": "studentToken", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        { "name": "Admin Login", "request": { "method": "POST", "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\"email\":\"admin@sapfs.edu\",\"password\":\"Admin@123\"}", "options": { "raw": { "language": "json" } } } } },
+        { "name": "Faculty Login", "request": { "method": "POST", "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\"email\":\"dr.sharma@sapfs.edu\",\"password\":\"Faculty@123\"}", "options": { "raw": { "language": "json" } } } } },
+        { "name": "Student Login", "request": { "method": "POST", "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\"email\":\"arjun.kumar@student.sapfs.edu\",\"password\":\"Student@123\"}", "options": { "raw": { "language": "json" } } } } },
+        { "name": "Refresh Token", "request": { "method": "POST", "url": "{{baseUrl}}/auth/refresh" } }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        { "name": "List Students", "request": { "method": "GET", "url": "{{baseUrl}}/students?page=1&page_size=20", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } },
+        { "name": "Get Student", "request": { "method": "GET", "url": "{{baseUrl}}/students/:student_id", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } },
+        { "name": "Create Student", "request": { "method": "POST", "url": "{{baseUrl}}/students", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] }, "body": { "mode": "raw", "raw": "{\"first_name\":\"Test\",\"last_name\":\"Student\",\"email\":\"test@student.edu\",\"batch_year\":2024,\"current_semester\":1}", "options": { "raw": { "language": "json" } } } } },
+        { "name": "Update Student", "request": { "method": "PUT", "url": "{{baseUrl}}/students/:student_id", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } },
+        { "name": "Delete Student", "request": { "method": "DELETE", "url": "{{baseUrl}}/students/:student_id", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } },
+        { "name": "Attendance Summary", "request": { "method": "GET", "url": "{{baseUrl}}/students/:student_id/attendance-summary", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } }
+      ]
+    },
+    {
+      "name": "Predictions",
+      "item": [
+        { "name": "Run Prediction", "request": { "method": "POST", "url": "{{baseUrl}}/predictions/predict", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] }, "body": { "mode": "raw", "raw": "{\"student_id\":\"e1111111-1111-1111-1111-111111111111\",\"prediction_type\":\"comprehensive\"}", "options": { "raw": { "language": "json" } } } } },
+        { "name": "Get Student Predictions", "request": { "method": "GET", "url": "{{baseUrl}}/predictions/student/:student_id", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } },
+        { "name": "Risk Report", "request": { "method": "GET", "url": "{{baseUrl}}/predictions/risk-report", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        { "name": "Get Stats", "request": { "method": "GET", "url": "{{baseUrl}}/dashboard/stats", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } },
+        { "name": "Performance Trends", "request": { "method": "GET", "url": "{{baseUrl}}/dashboard/performance-trends", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } },
+        { "name": "Risk Heatmap", "request": { "method": "GET", "url": "{{baseUrl}}/dashboard/risk-heatmap", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } },
+        { "name": "Attendance Analytics", "request": { "method": "GET", "url": "{{baseUrl}}/dashboard/attendance-analytics", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        { "name": "Student Report Card", "request": { "method": "GET", "url": "{{baseUrl}}/reports/student/:student_id/report-card", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } },
+        { "name": "Department Report", "request": { "method": "GET", "url": "{{baseUrl}}/reports/department/:dept_id/analytics", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{adminToken}}" }] } } }
+      ]
+    }
+  ]
+}

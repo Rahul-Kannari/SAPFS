@@ -1,0 +1,313 @@
+﻿C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:23: - 🎓 Student & Faculty Management
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:24: - 📊 Academic Records & Attendance Tracking
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:66: app.include_router(auth.router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:67: app.include_router(students.router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:68: app.include_router(predictions.router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:69: app.include_router(dashboard.router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:71: # Additional routers (attendance, faculty, assignments, reports)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:73: from app.core.dependencies import get_current_user, require_faculty_or_admin
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:80: from app.models.models import Faculty, Course, Attendance, Assignment, AssignmentSubmission, Notification
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:81: from app.schemas.schemas import (FacultyCreate, FacultyResponse, CourseCreate, CourseResponse,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:82: AttendanceCreate, BulkAttendanceCreate, AttendanceResponse,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:85: # Faculty Router
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:86: faculty_router = APIRouter(prefix="/faculty", tags=["Faculty"])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:90: @faculty_router.get("")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:91: async def list_faculty(db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:92: result = await db.execute(select(Faculty).options(selectinload(Faculty.department)))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:95: @faculty_router.post("")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:96: async def create_faculty(data: FacultyCreate, db: AsyncSession = Depends(get_db), current_user = Depends(require_faculty_or_admin)):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:99: user = User(email=data.email, hashed_password=get_password_hash(data.password), role="faculty", is_verified=True)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:102: count = (await db.execute(select(func.count(Faculty.id)))).scalar() + 1
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:103: faculty = Faculty(user_id=user.id, faculty_id=f"FAC{str(count).zfill(3)}", **data.model_dump(exclude={'email', 'password'}))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:104: db.add(faculty)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:106: return faculty
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:108: app.include_router(faculty_router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:110: # Courses Router
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:111: courses_router = APIRouter(prefix="/courses", tags=["Courses"])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:113: @courses_router.get("")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:114: async def list_courses(db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:118: @courses_router.post("")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:119: async def create_course(data: CourseCreate, db: AsyncSession = Depends(get_db), current_user = Depends(require_faculty_or_admin)):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:125: app.include_router(courses_router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:127: # Attendance Router
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:128: attendance_router = APIRouter(prefix="/attendance", tags=["Attendance"])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:130: @attendance_router.post("/bulk")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:131: async def mark_bulk_attendance(data: BulkAttendanceCreate, db: AsyncSession = Depends(get_db), current_user = Depends(require_faculty_or_admin)):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:134: att = Attendance(
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:144: return {"message": f"Attendance marked for {records_created} students"}
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:146: app.include_router(attendance_router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:148: # Assignments Router
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:149: assignments_router = APIRouter(prefix="/assignments", tags=["Assignments"])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:151: @assignments_router.get("")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:152: async def list_assignments(course_id: Optional[UUID] = None, db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:159: @assignments_router.post("")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:160: async def create_assignment(data: AssignmentCreate, db: AsyncSession = Depends(get_db), current_user = Depends(require_faculty_or_admin)):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:161: faculty_result = await db.execute(select(Faculty).where(Faculty.user_id == current_user.id))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:162: faculty = faculty_result.scalar_one_or_none()
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:163: assignment = Assignment(**data.model_dump(), faculty_id=faculty.id if faculty else None)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:168: app.include_router(assignments_router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:188: app.include_router(notif_router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:192: @app.get("/docs", include_in_schema=False)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:196: @app.get("/")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:200: @app.get("/health")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:209: app.include_router(academic_records_router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:210: app.include_router(reports_router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:211: app.include_router(agents_v2_router, prefix="/api/v2")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\main.py:212: app.include_router(agents_v2_router, prefix=API_PREFIX)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:7: from app.models.models import AcademicRecord, Student, Course, Faculty
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:9: from app.core.dependencies import get_current_user, require_faculty_or_admin
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:25: @router.get("")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:43: @router.post("", response_model=AcademicRecordResponse)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:47: current_user = Depends(require_faculty_or_admin)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:55: faculty_result = await db.execute(select(Faculty).where(Faculty.user_id == current_user.id))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:56: faculty = faculty_result.scalar_one_or_none()
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:65: recorded_by=faculty.id if faculty else None
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:76: @router.put("/{record_id}", response_model=AcademicRecordResponse)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:81: current_user = Depends(require_faculty_or_admin)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:105: @router.get("/student/{student_id}/transcript")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:123: transcript[sem] = {'semester': sem, 'academic_year': record.academic_year, 'courses': [], 'sgpa': 0, 'credits': 0}
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:124: transcript[sem]['courses'].append({
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:139: courses = sem_data['courses']
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:140: total_gp = sum(c['grade_points'] * c['credits_earned'] for c in courses)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\academic_records.py:141: total_credits = sum(c['credits_earned'] for c in courses)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\auth.py:12: @router.post("/login", response_model=Token)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\auth.py:51: "attendance_pct": float(student.attendance_pct) if student.attendance_pct else 91.27,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\auth.py:73: @router.post("/refresh", response_model=Token)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\auth.py:102: @router.get("/me")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:6: from app.models.models import Student, Faculty, Course, Attendance, AcademicRecord, Prediction, Enrollment
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:12: @router.get("/stats")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:18: total_faculty = (await db.execute(select(func.count(Faculty.id)))).scalar()
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:19: total_courses = (await db.execute(select(func.count(Course.id)))).scalar()
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:31: attendance_data = await db.execute(
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:33: func.count(Attendance.id).label("total"),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:34: func.sum(func.case((Attendance.status == "present", 1), else_=0)).label("present")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:35: ).where(Attendance.date >= thirty_days_ago)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:37: att_row = attendance_data.first()
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:41: stu_att = (await db.execute(select(func.avg(Student.attendance_pct)))).scalar()
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:44: stu_att = (await db.execute(select(func.avg(Student.attendance_pct)))).scalar()
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:49: "total_faculty": total_faculty,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:50: "total_courses": total_courses,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:53: "avg_attendance": avg_att,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:57: @router.get("/performance-trends")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:67: func.avg(StudentPerformanceTimeseries.attendance_percentage).label("avg_attendance"),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:77: "avg_attendance": round(float(r.avg_attendance or 0), 2),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:83: @router.get("/risk-heatmap")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:108: @router.get("/attendance-analytics")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:109: async def get_attendance_analytics(
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:116: extract('month', Attendance.date).label("month"),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:117: func.count(Attendance.id).label("total"),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:118: func.sum(case((Attendance.status == "present", 1), else_=0)).label("present")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:119: ).group_by(extract('month', Attendance.date))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\dashboard.py:120: .order_by(extract('month', Attendance.date))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:10: from app.core.dependencies import get_current_user, require_faculty_or_admin
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:19: @router.post("/predict")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:24: current_user = Depends(require_faculty_or_admin)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:42: "attendance_pct": float(t.attendance_percentage or 0),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:43: "assignments_completed": t.assignments_completed,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:44: "assignments_total": t.assignments_total,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:58: "attendance_pct": float(student.attendance_pct or 85.0),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:108: @router.post("/simulate")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:117: target_attendance=request.target_attendance,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:123: @router.post("/retrain")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:126: current_user = Depends(require_faculty_or_admin)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:141: @router.get("/history", response_model=List[PredictionResponse])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:155: @router.get("/student/{student_id}", response_model=List[PredictionResponse])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:170: @router.get("/risk-report")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\predictions.py:173: current_user = Depends(require_faculty_or_admin)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\reports.py:9: from app.core.dependencies import get_current_user, require_faculty_or_admin
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\reports.py:14: @router.get("/student/{student_id}/report-card")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\reports.py:63: 'courses': [
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\reports.py:82: @router.get("/department/{dept_id}/analytics")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\reports.py:86: current_user = Depends(require_faculty_or_admin)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\reports.py:112: @router.get("/risk-summary")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\reports.py:115: current_user = Depends(require_faculty_or_admin)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:8: from app.models.models import Student, User, Department, Enrollment, Attendance
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:10: from app.core.dependencies import get_current_user, require_faculty_or_admin, require_admin
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:19: @router.get("", response_model=PaginatedResponse)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:70: @router.post("", response_model=StudentResponse)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:74: current_user = Depends(require_faculty_or_admin)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:103: @router.get("/{student_id}", response_model=StudentResponse)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:122: @router.put("/{student_id}", response_model=StudentResponse)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:127: current_user = Depends(require_faculty_or_admin)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:140: @router.delete("/{student_id}")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:153: @router.get("/{student_id}/attendance-summary")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:154: async def get_attendance_summary(
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:160: select(func.count()).where(Attendance.student_id == student_id)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:164: and_(Attendance.student_id == student_id, Attendance.status == "present")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:176: @router.post("/bulk-import")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:180: current_user = Depends(require_faculty_or_admin)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:200: att = float(r.get("Attendance_Rate") or r.get("attendance_pct") or 85.0)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:214: s_obj.attendance_pct = att
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\endpoints\students.py:244: attendance_pct=att,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:17: from app.core.dependencies import get_current_user, require_faculty_or_admin
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:71: workshop_attendance:    Optional[int] = None
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:80: @router.get("/health")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:85: @router.post("/predict-v2")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:89: current_user = Depends(require_faculty_or_admin),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:104: att_val = float(student.attendance_pct or 80.0)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:114: "attendance_pct":        att_val,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:123: "cgpa": float(t.cgpa or 0), "attendance_pct": float(t.attendance_percentage or 0),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:124: "assignment_rate": t.assignments_completed / max(t.assignments_total, 1),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:131: "attendance_pct": 78, "assignment_rate": 0.8,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:154: @router.post("/advisor/chat")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:170: "attendance_pct": 78,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:190: @router.post("/features")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:194: current_user = Depends(require_faculty_or_admin),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:208: @router.get("/features/{student_id}")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:224: "engagement": {"club_participation":1,"hackathon_count":1,"sports_activities":0,"workshop_attendance":2,"technical_event_count":3},
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:228: @router.get("/risk-dashboard")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:231: current_user = Depends(require_faculty_or_admin),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:255: @router.get("/evaluation")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:257: current_user = Depends(require_faculty_or_admin),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:272: @router.get("/research/export")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:275: current_user = Depends(require_faculty_or_admin),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:292: @router.get("/forecast/{student_id}")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:306: "attendance_pct": float(t.attendance_percentage or 75)}
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:310: "attendance_pct": 80} for i in range(1, 5)]
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:331: "recommendations": {"priority_actions": ["Maintain attendance above 85%",
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:332: "Submit assignments on time"]},
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:339: return "Focus on attendance, timely assignments, and consistent study habits. Aim for 85%+ attendance."
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\api\v2\endpoints\agents.py:344: return f"As a {ctx.get('risk_level','medium')}-risk student with CGPA {ctx.get('cgpa','N/A')}, focus on consistent study habits and regular attendance."
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\core\dependencies.py:32: async def require_faculty_or_admin(current_user: User = Depends(get_current_user)) -> User:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\core\dependencies.py:33: if current_user.role not in [UserRole.admin, UserRole.faculty]:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\core\dependencies.py:34: raise HTTPException(status_code=403, detail="Faculty or Admin access required")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:34: "Age", "Gender_Numeric", "Attendance_Rate", "Prior_GPA",
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:88: att = float(student_features.get("Attendance_Rate") or student_features.get("attendance_pct") or student_features.get("attendance") or 85.0)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:100: if "attendance_pct" in df:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:101: att = float(df["attendance_pct"].iloc[-1])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:105: if "assignments_completed" in df and "assignments_total" in df:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:106: tot = float(df["assignments_total"].iloc[-1])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:107: comp = float(df["assignments_completed"].iloc[-1])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:118: a1 = float(ts_data[-1].get("attendance_pct", att))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:119: a2 = float(ts_data[-2].get("attendance_pct", att))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:136: "Attendance_Rate": att,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:142: "attendance_pct": att,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:145: "attendance_trend": att_trend,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:152: def _determine_risk(self, gpa: float, attendance: float, backlogs: int) -> str:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:155: if gpa < 2.2 or (attendance < 60 and backlogs >= 2) or backlogs >= 4:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:157: elif gpa < 2.7 or attendance < 70 or backlogs >= 2:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:159: elif gpa < 3.2 or attendance < 82 or backlogs >= 1:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:164: if gpa < 5.5 or (attendance < 60 and backlogs >= 3) or backlogs >= 4:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:166: elif gpa < 6.5 or attendance < 70 or backlogs >= 2:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:168: elif gpa < 7.5 or attendance < 82 or backlogs >= 1:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:177: att = float(features.get("attendance_pct", features.get("attendance", features.get("last_attendance", 80.0))))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:188: # attendance (+0.25 baseline), assignment_rate (+0.18 baseline),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:199: "attendance": float(att_impact if att_impact != 0.0 else 0.25),
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:207: attendance = features.get("attendance_pct", 80.0)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:214: "attendance": [],
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:215: "assignments": [],
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:218: if attendance < 75:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:219: recs["priority"].append("⚠️ Attendance below 75% — risk of exam debarment")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:220: recs["attendance"].append("Aim for 100% attendance in remaining classes")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:221: elif attendance < 85:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:222: recs["attendance"].append("Maintain attendance above 85% to maximize internal evaluation marks")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:225: recs["assignments"].append("Complete and submit all pending assignments immediately")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:227: recs["assignments"].append("Consistently submit assignments ahead of deadline")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:239: recs["priority"].insert(0, "🚨 Academic intervention required — meet faculty mentor immediately")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:296: att_penalty = max(0.0, (75.0 - features["attendance_pct"]) * 0.04)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:301: att_penalty = max(0.0, (75.0 - features["attendance_pct"]) * 0.016)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:308: att = features["attendance_pct"]
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:321: risk_level = self._determine_risk(final_gpa, features["attendance_pct"], features["backlogs"])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:327: "attendance": 0.22,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:351: target_attendance: float,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:359: "attendance_pct": target_attendance,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:364: "attendance_trend": 5.0 if target_attendance >= 85 else 0.0,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\pipelines\prediction_pipeline.py:366: "last_attendance": target_attendance,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\utils\data_utils.py:26: zero_fill_cols = ['backlogs', 'assignments_completed', 'assignments_total']
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\utils\data_utils.py:27: median_fill_cols = ['sgpa', 'cgpa', 'attendance_pct', 'assignment_rate', 'credit_completion_rate']
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\utils\data_utils.py:74: target_cols = cols or ['sgpa', 'cgpa', 'attendance_pct', 'backlogs']
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\utils\data_utils.py:92: 'attendance_pct': (0, 100), 'backlogs': (0, 20)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\utils\data_utils.py:123: for col in ['sgpa', 'attendance_pct', 'assignment_rate', 'backlogs']:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\utils\data_utils.py:150: if 'assignments_completed' in df.columns and 'assignments_total' in df.columns:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\utils\data_utils.py:151: df['assignment_rate'] = df['assignments_completed'] / df['assignments_total'].replace(0, 1)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\utils\data_utils.py:210: required_fields = ['semester', 'sgpa', 'attendance_pct']
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\utils\data_utils.py:217: if not (0 <= float(record.get('attendance_pct', 0)) <= 100):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\ml\utils\data_utils.py:218: return False, f"Invalid attendance {record['attendance_pct']} in record {i+1}"
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\advanced_models.py:55: workshop_attendance    = Column(Integer, default=0)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:11: faculty = "faculty"
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:20: class AttendanceStatus(str, enum.Enum):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:26: class AssignmentStatus(str, enum.Enum):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:46: faculty = relationship("Faculty", back_populates="user", uselist=False)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:55: head_faculty_id = Column(UUID(as_uuid=True), ForeignKey("faculty.id", use_alter=True, name="fk_dept_head"), nullable=True)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:60: faculty_members = relationship("Faculty", back_populates="department", foreign_keys="Faculty.department_id")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:61: courses = relationship("Course", back_populates="department")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:81: attendance_pct = Column(Numeric(5, 2))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:97: attendance_records = relationship("Attendance", back_populates="student")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:98: submissions = relationship("AssignmentSubmission", back_populates="student")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:102: class Faculty(Base):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:103: __tablename__ = "faculty"
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:106: faculty_id = Column(String(20), unique=True, nullable=False)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:117: user = relationship("User", back_populates="faculty")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:118: department = relationship("Department", back_populates="faculty_members", foreign_keys=[department_id])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:119: courses = relationship("Course", back_populates="faculty")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:122: __tablename__ = "courses"
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:129: faculty_id = Column(UUID(as_uuid=True), ForeignKey("faculty.id"))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:134: department = relationship("Department", back_populates="courses")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:135: faculty = relationship("Faculty", back_populates="courses")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:138: attendance_records = relationship("Attendance", back_populates="course")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:139: assignments = relationship("Assignment", back_populates="course")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:145: course_id = Column(UUID(as_uuid=True), ForeignKey("courses.id", ondelete="CASCADE"), nullable=False)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:159: course_id = Column(UUID(as_uuid=True), ForeignKey("courses.id"), nullable=False)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:172: recorded_by = Column(UUID(as_uuid=True), ForeignKey("faculty.id"))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:179: class Attendance(Base):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:180: __tablename__ = "attendance"
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:183: course_id = Column(UUID(as_uuid=True), ForeignKey("courses.id"), nullable=False)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:185: status = Column(Enum(AttendanceStatus, name="attendance_status"), nullable=False, default=AttendanceStatus.present)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:187: marked_by = Column(UUID(as_uuid=True), ForeignKey("faculty.id"))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:191: student = relationship("Student", back_populates="attendance_records")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:192: course = relationship("Course", back_populates="attendance_records")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:195: __tablename__ = "assignments"
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:197: course_id = Column(UUID(as_uuid=True), ForeignKey("courses.id", ondelete="CASCADE"), nullable=False)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:198: faculty_id = Column(UUID(as_uuid=True), ForeignKey("faculty.id"), nullable=False)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:207: course = relationship("Course", back_populates="assignments")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:208: submissions = relationship("AssignmentSubmission", back_populates="assignment")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:210: class AssignmentSubmission(Base):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:213: assignment_id = Column(UUID(as_uuid=True), ForeignKey("assignments.id", ondelete="CASCADE"), nullable=False)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:218: status = Column(Enum(AssignmentStatus, name="assignment_status"), default=AssignmentStatus.pending)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:220: graded_by = Column(UUID(as_uuid=True), ForeignKey("faculty.id"))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:252: attendance_percentage = Column(Numeric(5, 2))
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:253: assignments_completed = Column(Integer, default=0)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\models\models.py:254: assignments_total = Column(Integer, default=0)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\advanced_schemas.py:40: workshop_attendance:   int = 0
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:10: faculty = "faculty"
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:19: class AttendanceStatus(str, Enum):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:112: attendance_pct: Optional[float] = None
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:132: attendance_pct: Optional[float]
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:138: # ---- Faculty ----
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:139: class FacultyBase(BaseModel):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:147: class FacultyCreate(FacultyBase):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:149: password: str = Field(default="Faculty@123")
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:151: class FacultyResponse(FacultyBase):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:153: faculty_id: str
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:167: faculty_id: Optional[UUID] = None
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:207: # ---- Attendance ----
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:208: class AttendanceBase(BaseModel):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:212: status: AttendanceStatus
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:216: class AttendanceCreate(AttendanceBase):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:219: class BulkAttendanceCreate(BaseModel):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:224: class AttendanceResponse(AttendanceBase):
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:247: faculty_id: UUID
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:271: target_attendance: float = 85.0
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:293: total_faculty: int
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:294: total_courses: int
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\schemas\schemas.py:297: avg_attendance: float
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:3: Handles: Risk alerts, attendance warnings, assignment reminders
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:20: """Send risk level alert to student and faculty"""
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:25: async def send_attendance_warning(self, student_email: str, student_name: str,
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:26: attendance_pct: float, course_name: str) -> bool:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:27: """Send attendance warning when below threshold"""
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:28: subject = f"📅 Attendance Warning — {course_name}"
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:29: body = self._build_attendance_email(student_name, attendance_pct, course_name)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:48: body = f"Dear Faculty,\n\nPlease find attached the AI prediction report for {student_name}.\n\nGenerated by SAPFS v1.0"
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:74: def _build_attendance_email(self, name: str, pct: float, course: str) -> str:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:78: 📅 ATTENDANCE WARNING — {course}
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:80: Your current attendance in {course} is {pct:.1f}%, which is below the required minimum of 75%.
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:83: • Attendance below 75% may result in exam debarment
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:85: • Contact your faculty if you have medical/emergency absences
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\notification_service.py:89: Log in to SAPFS for detailed attendance records.
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\report_service.py:119: courses = sem_data.get('courses', [])
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\report_service.py:120: if courses:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\report_service.py:122: for c in courses:
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\report_service.py:143: *[('TEXTCOLOR', (7, i+1), (7, i+1), GREEN if courses[i].get('passed') else RED)
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\report_service.py:144: for i in range(len(courses))],
+C:\Users\RAHUL KANNARI\Downloads\SAPFS_Complete_Project\smart-academic-forecasting\backend\app\services\report_service.py:177: for key in ['priority', 'study_tips', 'attendance', 'assignments']:

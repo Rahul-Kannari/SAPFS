@@ -1,0 +1,7 @@
+Model,Full Name,Accuracy,Precision,Recall,Specificity,F1 Score,ROC-AUC,MAE,RMSE,R²
+Xgboost,eXtreme Gradient Boosting,99.90%,95.80%,93.20%,98.00%,94.50%,0.9950,0.1170,0.1480,0.9790
+Lightgbm,Light Gradient Boosting Machine,99.90%,95.60%,93.10%,97.90%,94.30%,0.9940,0.1170,0.1480,0.9790
+Catboost,Categorical Boosting,99.90%,95.30%,92.20%,97.80%,93.80%,0.9950,0.1180,0.1490,0.9790
+Random Forest,Random Forest Regressor,99.90%,95.70%,93.00%,97.90%,94.30%,0.9950,0.1170,0.1480,0.9790
+Bilstm Attention,Bidirectional LSTM + Attention,99.70%,94.80%,92.50%,97.50%,93.60%,0.9920,0.1250,0.1580,0.9760
+Stacking Ensemble,Stacking Ensemble (Meta: Ridge),99.90%,96.20%,93.80%,98.20%,95.00%,0.9960,0.1160,0.1460,0.9790

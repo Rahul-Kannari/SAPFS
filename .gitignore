@@ -1,0 +1,33 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node.js / React
+node_modules/
+dist/
+build/
+coverage/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+
+# Machine Learning generated files
+catboost_info/
+mlruns/
+
+# Logs
+*.log
+logs/
+
+# System files
+.DS_Store
+Thumbs.db

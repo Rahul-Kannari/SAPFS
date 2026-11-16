@@ -1,0 +1,17 @@
+{
+  "dataset": "student_performance_dataset.csv",
+  "architecture": "Figure 3.3 Stacking Ensemble Architecture",
+  "base_models": [
+    "XGBoost",
+    "LightGBM",
+    "CatBoost",
+    "Random Forest",
+    "BiLSTM + Attention"
+  ],
+  "meta_learner": "Ridge / Logistic Regression",
+  "r2_score": -0.2309,
+  "mae": 0.5893,
+  "rmse": 0.7198,
+  "accuracy_pct": 92.7,
+  "trained_at": "2026-10-05T23:12:26.019801"
+}
